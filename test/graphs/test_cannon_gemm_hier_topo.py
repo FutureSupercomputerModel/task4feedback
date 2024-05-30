@@ -178,7 +178,7 @@ def test_data(n_gpus, blocks, n, p, hier_levels, a=8, data_size=None, m=None, en
         #if(task.data.idx[0][2] == 0):
         #print(str(task.data.idx[0][2]) + " " + str(task.name) + " " + str(task.data_size) + "D: " + str(task.devices) + "S: " + str(task.source) + " " + str(task.communication_energy))
         total_communication_energy += task.communication_energy
-    comm_energy_in_pJ = total_communication_energy * 0.064
+    comm_energy_in_pJ = total_communication_energy * 0.064 #0.001 * 64bits for double precision
     #print(data_task_recorder)
     print(f"Communication Energy: {total_communication_energy}")
     print(f"Communication Energy: {comm_energy_in_pJ} pJ")
@@ -312,7 +312,7 @@ parser.add_argument('-max_levels', type=int, default='4')
 
 args = parser.parse_args()
 
-n = args.n
+n = args.n #8*8 matmul
 p_per_level = args.p
 m4 = parse_size(args.m)
 m = [m4]
@@ -322,7 +322,7 @@ m = [m4]
 #p_per_level = 4
 p = []
 a = 8
-energy = [0.01, 1, 100, 1000] 
+energy = [0.01, 1, 100, 1000] #fJ . need to multiply by bit number
 for i in range(args.max_levels):
     p.append(p_per_level)
 for i in range(1, args.max_levels):
